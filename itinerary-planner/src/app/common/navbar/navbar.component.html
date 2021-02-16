@@ -1,0 +1,25 @@
+<mat-toolbar color="primary">
+    <div fxShow="true" fxHide.gt-sm="true">
+        <button mat-icon-button (click)="sidenav.toggle()">
+            <mat-icon>menu</mat-icon>
+        </button>
+    </div>
+
+    <a class="companyName" routerLink="/">
+        <img src="{{icon.url}}" alt="{{icon.altText}}">
+        <span>{{siteName}}</span>
+    </a>
+    <span class="spacer"></span>
+    <div class="navigation-container" fxShow="true" fxHide.lt-md="true">
+        <a *ngFor="let nav of navigation" mat-stroked-button routerLink="{{nav.routerLink}}">{{nav.name}}</a>
+    </div>
+</mat-toolbar>
+<mat-sidenav-container fxFlexFill class="container">
+    <mat-sidenav color="primary" #sidenav fxLayout="column" mode="over"  opened="false" fxHide.gt-sm="true">
+        <div fxLayout="column">
+            <a *ngFor="let nav of navigation" mat-stroked-button routerLink="{{nav.routerLink}}">{{nav.name}}</a>
+        </div>
+        </mat-sidenav>
+        <mat-sidenav-content fxFlexFill>
+    </mat-sidenav-content>
+</mat-sidenav-container>

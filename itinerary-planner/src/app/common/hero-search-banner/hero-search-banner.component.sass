@@ -1,0 +1,77 @@
+.hero-section
+    background-position: 50% 50%
+    background-repeat: no-repeat
+    background-size: cover
+    background-image: url("/assets/images/hero/background.jpg")
+    min-height: 80vh
+    position: relative
+    display: flex
+    justify-content: center
+    align-items: center
+
+    .hero-overlay
+        opacity: 0.5
+        background-color: rgb(255, 255, 255)
+        min-height: 100vh
+        position: absolute
+        left: 0
+        top: 0
+        right: 0
+        top: 0
+        z-index: 0
+
+    .info-container
+        z-index: 1
+        position: absolute
+        text-align: center
+
+        .info-title
+            font-weight: bold
+            font-size: 3rem
+            font-family: 'Jost', sans-serif
+            line-height: 1.1
+            color: #232323
+            font-style: normal
+            letter-spacing: 0.5rem
+            margin-bottom: 50px
+
+        .info-subtitle
+            font-weight: normal
+            font-family: 'Jost', sans-serif
+            color: #232323
+            font-size: 1.5rem
+            line-height: 1.5
+            font-weight: 400
+        
+        .info-input
+            display: flex
+            margin-top: 20px
+            
+            .input-container
+                width: 40%
+                .input
+                    width: 100%
+                    height: 100%
+                    padding: 0
+                    margin: 0
+                &.date-input-container
+                    .date-form-field
+                        ::ng-deep .mat-form-field-flex
+                            background-color: initial
+                        ::ng-deep .mat-form-field-wrapper
+                            ::ng-deep div.mat-form-field-flex
+                                padding-top: 0
+                        ::ng-deep label.mat-form-field-label
+                            top: 1.5em
+                        ::ng-deep button
+                            top: 0.3em
+                        ::ng-deep mat-date-range-input
+                            padding-top: 0.2em
+                            margin-bottom: -0.2em
+
+            
+            .submit-container
+                width: 20%
+                button
+                    width: 100%
+                    height: 50px

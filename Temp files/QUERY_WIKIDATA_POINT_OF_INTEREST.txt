@@ -1,0 +1,115 @@
+SELECT ?child ?childLabel
+WHERE 
+{  
+  ?child (wdt:P31|wdt:P279)+ wd:Q960648.
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+
+
+  FILTER(?country = wd:Q142) filtra country per Francia
+
+
+  FILTER(?country = wd:Q38) Italia
+
+
+
+
+SELECT ?child ?childLabel ?coordinate ?coordinateLabel
+WHERE 
+{  
+  ?child wdt:P31* ?type.
+  ?type wdt:P279* wd:Q960648;.
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+
+
+SELECT ?child ?childLabel ?country ?countryLabel
+WHERE 
+{  
+  ?child wdt:P31* ?type.
+  ?type wdt:P279* wd:Q960648.
+  ?child wdt:P17 ?country.
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+
+
+
+
+
+
+
+SELECT *
+WHERE 
+{  
+  ?child wdt:P31* ?type.
+  ?type wdt:P279* wd:Q960648.
+  ?child wdt:P17 ?country.
+  ?child p:P625 ?coordinate.
+  ?coordinate ps:P625 ?coord.
+  ?coordinate psv:P625 ?coordinate_node.
+  ?coordinate_node wikibase:geoLongitude ?lon.
+  ?coordinate_node wikibase:geoLatitude ?lat.  
+  
+  FILTER(?country = wd:Q38)
+  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+
+
+
+
+SELECT ?child ?childLabel ?lat ?lon WHERE {
+  VALUES ?ent {
+    wd:Q570116
+    wd:Q35145263
+    wd:Q57660343
+    wd:Q24398318
+    wd:Q40080
+    wd:Q8502
+    wd:Q133056
+    wd:Q4989906
+    wd:Q174782
+    wd:Q56055115
+  }
+  ?child (wdt:P31/(wdt:P279*)) ?ent;
+    p:P625 ?coordinate.
+  ?coordinate ps:P625 ?coord;
+    psv:P625 ?coordinate_node.
+  ?coordinate_node wikibase:geoLongitude ?lon.
+  hint:Prior hint:rangeSafe "true"^^xsd:boolean.
+  ?coordinate_node wikibase:geoLatitude ?lat.
+  hint:Prior hint:rangeSafe "true"^^xsd:boolean.
+  FILTER(((((xsd:float(?lat)) >= "44.32152590157918"^^xsd:decimal) && ((xsd:float(?lat)) <= "44.352918098420815"^^xsd:decimal)) && ((xsd:float(?lon)) >= "12.246593482570987"^^xsd:decimal)) && ((xsd:float(?lon)) <= "12.280072517429012"^^xsd:decimal))
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
+
+
+
+SELECT DISTINCT ?child ?childLabel ?lat ?lon WHERE {
+  VALUES ?ent {
+    wd:Q570116
+    wd:Q35145263
+    wd:Q57660343
+    wd:Q24398318
+    wd:Q40080
+    wd:Q8502
+    wd:Q133056
+    wd:Q4989906
+    wd:Q174782
+    wd:Q56055115
+  }
+  ?type (wdt:P279*) ?ent.
+  ?child (wdt:P31*) ?type;
+    p:P625 ?coordinate.
+  ?child wdt:P17 wd:Q38.
+  ?coordinate ps:P625 ?coord;
+    psv:P625 ?coordinate_node.
+  ?coordinate_node wikibase:geoLongitude ?lon.
+  hint:Prior hint:rangeSafe "true"^^xsd:boolean.
+  ?coordinate_node wikibase:geoLatitude ?lat.
+  hint:Prior hint:rangeSafe "true"^^xsd:boolean.
+  FILTER(((((xsd:float(?lat)) >= "44.32152590157918"^^xsd:decimal) && ((xsd:float(?lat)) <= "44.352918098420815"^^xsd:decimal)) && ((xsd:float(?lon)) >= "12.246593482570987"^^xsd:decimal)) && ((xsd:float(?lon)) <= "12.280072517429012"^^xsd:decimal))
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}

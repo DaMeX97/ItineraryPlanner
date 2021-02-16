@@ -1,0 +1,41 @@
+<div class="hero-section">
+    <div class="hero-overlay"></div>
+
+    <div class="info-container">
+        <div class="info-title">
+            Dove vorresti andare?
+        </div>
+
+        <div class="info-subtitle">
+            Scegli la tua meta ed il periodo di viaggio e "Itinerary Planner" farà tutto il resto!
+        </div>
+
+        <div class="info-input">
+            <div class="input-container">
+                <mat-form-field class="input">
+                    <mat-label>Luogo</mat-label>
+                    <input matInput type="text" [(ngModel)]="luogo">
+                    <button mat-button *ngIf="luogo" matSuffix mat-icon-button aria-label="Clear" (click)="luogo=''">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+
+            <div class="input-container date-input-container">
+                <mat-form-field appearance="fill" class="date-form-field">
+                    <mat-label class="date-label">Da/a</mat-label>
+                    <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                        <input matStartDate formControlName="start" placeholder="Start date">
+                        <input matEndDate formControlName="end" placeholder="End date">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+            </div>
+
+            <div class="submit-container">
+                <button mat-raised-button color="primary" (click)="onSubmit()">PIANIFICA</button>
+            </div>
+        </div>
+    </div>
+</div>
