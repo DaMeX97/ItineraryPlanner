@@ -1,0 +1,178 @@
+<div class="new-post-card-container" *ngIf="showCreatePost">
+    <mat-card class="new-post-container">
+        <div class="input-container">
+            <img class="author-image" src="/assets/images/default/user.png"/>
+            <mat-form-field>
+                <mat-label>Talk with your followers...</mat-label>
+                <textarea [(ngModel)]="post_text"
+                    matInput
+                    cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="5"
+                    cdkAutosizeMaxRows="5"></textarea>
+              </mat-form-field>
+        </div>
+
+        <div class="button-container">
+            <app-button-spinner text="Publish post" [spin]="newPostLoader" [callback]="createPost">
+                Publish post
+            </app-button-spinner>
+        </div>
+    </mat-card>
+</div>
+
+<div *ngIf="posts.length > 0" class="posts-container">
+    <div *ngFor="let post of posts; let postIndex = index">
+        <mat-card class="single-post" *ngIf="editPostLoader !== postIndex">
+            <div class="author-container">
+                <img class="author-image" src="/assets/images/default/user.png"/>
+                <div class="author-date">
+                    <div class="post-author">
+                        <button class="profile-link" mat-button color="primary" href="#" (click)="goToUserPage(post.author)">{{post.author.firstName}} {{post.author.lastName}}</button> 
+                    </div>
+                    <div class="post-date">
+                        {{dateUtils.getDateTimeStringFromMs(post.createdAt)}}
+    
+                        <span *ngIf="post.author.id === jwtService.getId()">
+                            <button mat-icon-button [matMenuTriggerFor]="postInfoMenu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #postInfoMenu="matMenu">
+                                <button mat-menu-item (click)="editPost(postIndex)">Edit</button>
+                                <button mat-menu-item (click)="deletePost(postIndex)">Delete</button>
+                            </mat-menu>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="body-container">
+                {{post.body}}
+            </div>      
+    
+            <mat-divider></mat-divider>
+    
+            <mat-accordion>
+                <mat-expansion-panel class="post-additional-info">
+    
+                    <mat-expansion-panel-header>
+                        <div class="count-comments-container">
+                            Comments ({{post.comments.length}})
+                        </div>
+                    </mat-expansion-panel-header>
+    
+                    <div class="comments-container">        
+                        <div class="single-comment" *ngFor="let comment of post.comments; let commentIndex = index">
+
+                            <div *ngIf="editCommentLoader.postIndex !== postIndex || editCommentLoader.commentIndex !== commentIndex">
+                                <div class="author-container">
+                                    <img class="author-image" src="/assets/images/default/user.png"/>
+                                    <div class="author-date">
+                                        <div class="post-author">
+                                            <button class="profile-link" mat-button color="primary" href="#" (click)="goToUserPage(comment.author)">{{comment.author.firstName}} {{comment.author.lastName}}</button>
+                                        </div>
+                                        <div class="post-date">
+                                            {{dateUtils.getDateTimeStringFromMs(comment.createdAt)}}
+        
+                                            <span *ngIf="comment.author.id === jwtService.getId()">
+                                                <button mat-icon-button [matMenuTriggerFor]="commentInfoMenu">
+                                                    <mat-icon>more_vert</mat-icon>
+                                                </button>
+                                                <mat-menu #commentInfoMenu="matMenu">
+                                                    <button mat-menu-item (click)="editComment(postIndex, commentIndex)">Edit</button>
+                                                    <button mat-menu-item (click)="deleteComment(postIndex, commentIndex)">Delete</button>
+                                                </mat-menu>
+                                            </span>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <mat-divider></mat-divider>
+        
+                                <div class="body-container">
+                                    {{comment.body}}
+                                </div>  
+                            </div>
+
+                            <div *ngIf="editCommentLoader.postIndex === postIndex && editCommentLoader.commentIndex === commentIndex">
+                                <div class="new-comment-container">
+                                    <div class="input-container">
+                                        <img class="author-image" src="/assets/images/default/user.png"/>
+                                        <mat-form-field>
+                                            <mat-label>Comment...</mat-label>
+                                            <textarea 
+                                                [(ngModel)]="editCommentText"
+                                                matInput
+                                                cdkTextareaAutosize
+                                                #autosize="cdkTextareaAutosize"
+                                                cdkAutosizeMinRows="1"
+                                                cdkAutosizeMaxRows="5"></textarea>
+                                          </mat-form-field>
+                                    </div>
+            
+                                    <div class="button-container with-update">
+                                        <button mat-raised-button color="primary" (click)="stopEditComment()">Cancel</button>
+
+                                        <app-button-spinner text="Update comment" [spin]="newCommentLoader === postIndex" [callback]="updateComment(postIndex, commentIndex)"></app-button-spinner>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+    
+                        <mat-divider></mat-divider>
+    
+                        <div class="new-comment-container">
+                            <div class="input-container">
+                                <img class="author-image" src="/assets/images/default/user.png"/>
+                                <mat-form-field>
+                                    <mat-label>Comment...</mat-label>
+                                    <textarea 
+                                        [(ngModel)]="newComments[postIndex]"
+                                        matInput
+                                        cdkTextareaAutosize
+                                        #autosize="cdkTextareaAutosize"
+                                        cdkAutosizeMinRows="1"
+                                        cdkAutosizeMaxRows="5"></textarea>
+                                  </mat-form-field>
+                            </div>
+    
+                            <div class="button-container">
+                                <app-button-spinner text="Send comment" [spin]="newCommentLoader === postIndex" [callback]="createComment(postIndex)"></app-button-spinner>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </mat-expansion-panel>
+            </mat-accordion>
+        </mat-card>
+    
+        <mat-card class="new-post-container" *ngIf="editPostLoader === postIndex">
+            <div class="input-container">
+                <img class="author-image" src="/assets/images/default/user.png"/>
+                <mat-form-field>
+                    <mat-label>Talk with your followers...</mat-label>
+                    <textarea [(ngModel)]="editPostText"
+                        matInput
+                        cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="5"
+                        cdkAutosizeMaxRows="5"></textarea>
+                  </mat-form-field>
+            </div>
+    
+            <div class="button-container with-update">
+                <button mat-raised-button color="primary" (click)="stopEditPost()">Cancel</button>
+
+                <app-button-spinner text="Update post" [spin]="newPostLoader" [callback]="updatePost(postIndex)"></app-button-spinner>
+            </div>
+        </mat-card>
+    </div>
+</div>
+
+<mat-card *ngIf="posts.length === 0">
+    No posts to show.
+</mat-card>

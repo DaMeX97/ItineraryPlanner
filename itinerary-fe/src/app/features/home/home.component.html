@@ -1,0 +1,19 @@
+<div class="home-container">
+    <app-navbar></app-navbar>
+
+    <div *ngIf="logged" class="home">
+        <div class="home-logged">
+            <app-post-list [posts]="posts"></app-post-list>
+        </div>
+    </div>
+
+    <div *ngIf="!logged" class="home-not-logged">
+        <div class="hero-image">
+            <div class="hero-text">
+                <h1>Itinerary Planner</h1>
+                <p>This is a project for the Web Application 2020-2021 course. The project is a demo, so it was developed simply for illustrative purposes.</p>
+            </div>
+          </div>
+    </div>
+</div>
+

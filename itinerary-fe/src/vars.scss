@@ -1,0 +1,17 @@
+@import "~@angular/material/theming";
+
+@include mat-core();
+
+$max-mobile: 768px;
+$min-tablet: 769px;
+$max-tablet: 1224px;
+$min-desktop: 1225px;
+
+$mainColor: #303030;
+
+$primary-mat: mat-palette($mat-blue, 700, 700, 700); //$mat-light-blue;
+$primary-color:#1976D2;
+$secondary-mat: $mat-indigo;
+$secondary-color: #3F51B5;
+$warn-mat: $mat-red;
+$warn-color: #C62828;

@@ -1,0 +1,138 @@
+<mat-toolbar color="primary">
+    <div fxShow="true" fxHide.gt-sm="true">
+        <button mat-icon-button (click)="toggleSidenav()">
+            <mat-icon>menu</mat-icon>
+        </button>
+    </div>
+
+    <a class="companyName" routerLink="/">
+        <img src="{{icon.url}}" alt="{{icon.altText}}">
+        <h1>{{siteName}}</h1>
+    </a>
+
+    <div class="search-bar" *ngIf="logged" fxHide.lt-md="true">
+        <mat-form-field class="example-full-width">
+            <input type="text"
+                placeholder="Search user..."
+                matInput
+                (keyup.enter)="searchUser()" 
+                [formControl]="searchBarFormControl">
+        </mat-form-field>
+
+        <button mat-raised-button color="accent" (click)="searchUser()" class="search-button" fxHide.lt-md="true">
+            <mat-icon aria-hidden="false">search</mat-icon>
+            Search
+        </button>
+    </div>
+
+    <div class="navigation-container" fxShow="true" fxHide.lt-md="true">
+        <div>
+            <button class="dropdown-user" *ngIf="logged" mat-raised-button mat-mini-fab color="accent" [matMenuTriggerFor]="FRMenu">
+                <mat-icon aria-hidden="false">group_add</mat-icon>
+            </button>
+            <mat-menu #FRMenu="matMenu" xPosition="before" class="fr-menu">
+                <div class="has-content" *ngIf="followRequests.length > 0">
+                    <div *ngFor="let frReq of followRequests" class="single-fr">
+                        {{frReq.firstName}} {{frReq.lastName}}
+    
+                        <button mat-raised-button color="accent" color="accent" (click)="answerFollowRequest(frReq, true)">
+                            Accept
+                        </button>
+    
+                        <button mat-raised-button color="accent" color="accent" (click)="answerFollowRequest(frReq, false)">
+                            Reject
+                        </button>
+                    </div>    
+                </div>
+
+                <div class="no-content" *ngIf="followRequests.length === 0">
+                    No following requests.
+                </div>
+            </mat-menu>
+
+            <a [class.active]="url === '/search'" routerLink="/search" mat-raised-button color="accent">
+                <mat-icon aria-hidden="false">flight_takeoff</mat-icon>
+                Plan itinerary
+            </a>
+            <a *ngIf="!logged" (click)="openLogin()" mat-raised-button color="accent">
+                <mat-icon aria-hidden="false">login</mat-icon>
+                Login
+            </a>
+            <a *ngIf="!logged" [class.active]="url === '/register'" mat-raised-button color="accent" routerLink="/register">
+                <mat-icon aria-hidden="false">how_to_reg</mat-icon>
+                Register
+            </a>
+
+            <button class="dropdown-user user-profile" *ngIf="logged" mat-raised-button color="accent" [matMenuTriggerFor]="beforeMenu">
+                {{username}}
+                <mat-icon aria-hidden="false">keyboard_arrow_down</mat-icon>
+            </button>
+            <mat-menu #beforeMenu="matMenu" xPosition="before">
+                <button mat-menu-item (click)="goToProfilePage()" >
+                    <mat-icon aria-hidden="false">account_circle</mat-icon>
+                    Profile
+                </button>
+                <button mat-menu-item (click)="logout()" >
+                    <mat-icon aria-hidden="false">logout</mat-icon>
+                    Logout
+                </button>
+            </mat-menu>
+        </div>
+    </div>
+</mat-toolbar>
+<div class="sidenav" [ngClass]="sidenav ? 'open' : 'closed' " fxLayout="column" fxHide.gt-sm="false">
+    <div fxLayout="column" class="menu-container">
+        <div>
+            <a href="javascript:void(0)" class="closebtn" (click)="toggleSidenav()">&times;</a>
+
+            <a [class.active]="url === '/search'" mat-raised-button color="accent" routerLink="/search">
+                <mat-icon aria-hidden="false">flight_takeoff</mat-icon>
+                Plan itinerary
+            </a>
+
+            <div *ngIf="logged">
+                <button class="dropdown-user" *ngIf="logged" mat-raised-button color="accent" [matMenuTriggerFor]="FRMenuMob">
+                    <mat-icon aria-hidden="false">notifications</mat-icon>
+                    Notification
+                </button>
+                <mat-menu #FRMenuMob="matMenu" xPosition="before" class="fr-menu">
+                    <div class="has-content" *ngIf="followRequests.length > 0">
+                        <div *ngFor="let frReq of followRequests">
+                            {{frReq.firstName}} {{frReq.lastName}}
+        
+                            <button mat-raised-button color="accent" color="accent" (click)="answerFollowRequest(frReq, true)">
+                                Accept
+                            </button>
+        
+                            <button mat-raised-button color="accent" color="accent" (click)="answerFollowRequest(frReq, false)">
+                                Reject
+                            </button>
+                        </div>    
+                    </div>
+
+                    <div class="no-content" *ngIf="followRequests.length === 0">
+                        No following requests.
+                    </div>
+                </mat-menu>
+            </div>
+
+            <a *ngIf="!logged" (click)="openLogin()" mat-raised-button color="accent">
+                <mat-icon aria-hidden="false">login</mat-icon>
+                Login
+            </a>
+            <a *ngIf="!logged" [class.active]="url === '/register'" mat-raised-button color="accent" routerLink="/register">
+                <mat-icon aria-hidden="false">how_to_reg</mat-icon>
+                Register
+            </a>
+
+            <a *ngIf="logged" (click)="goToProfilePage()" mat-raised-button color="accent">
+                <mat-icon aria-hidden="false">account_circle</mat-icon>
+                Profile
+            </a>
+            <a *ngIf="logged" (click)="logout()" mat-raised-button color="accent">
+                <mat-icon aria-hidden="false">logout</mat-icon>
+                Logout
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,196 @@
+<div> 
+    <app-navbar></app-navbar>
+
+    <app-hero-search [onSubmitCallback]="search"></app-hero-search>
+
+    <div class="itinerary-wrapper">
+        <div class="itinerary-container" *ngIf="travelItinerary.searchDone && !travelItinerary.error">
+
+            <mat-card>
+                <div class="filters-container">
+                    <div class="single-filter start-time">
+                        <div>
+                            <div class="filter-description">
+                                Plan from
+                                <mat-form-field>
+                                    <input matInput [format]="24" [ngxTimepicker]="toggleStartTimeIcon" [disableClick]="true" readonly [(ngModel)]="startTime">
+                                </mat-form-field>
+                            </div>
+    
+                            <ngx-material-timepicker-toggle [for]="toggleStartTimeIcon">
+                                <button mat-raised-button color="primary" ngxMaterialTimepickerToggleIcon>
+                                    Change
+                                </button>
+                            </ngx-material-timepicker-toggle>
+                            <ngx-material-timepicker [hoursOnly]="true" #toggleStartTimeIcon (timeSet)="startTimeChange($event)"></ngx-material-timepicker>
+                        </div>
+                    </div>
+    
+                    <div class="single-filter end-time">
+                        <div>
+                            <div class="filter-description">
+                                To
+                                <mat-form-field>
+                                    <input matInput [format]="24" [ngxTimepicker]="toggleEndTimeIcon" [disableClick]="true" readonly [(ngModel)]="endTime">
+                                </mat-form-field>
+                            </div>
+    
+                            <ngx-material-timepicker-toggle [for]="toggleEndTimeIcon">
+                                <button mat-raised-button color="primary" ngxMaterialTimepickerToggleIcon>
+                                    Change
+                                </button>
+                            </ngx-material-timepicker-toggle>
+                            <ngx-material-timepicker [hoursOnly]="true" #toggleEndTimeIcon (timeSet)="endTimeChange($event)"></ngx-material-timepicker>
+                        </div>
+                    </div>
+    
+                    <div class="single-filter">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Break in minutes</mat-label>
+                            <mat-select [(value)]="itinerary.breakMinutes">
+                                <mat-option [value]="5">
+                                    5 minutes
+                                </mat-option>
+    
+                                <mat-option [value]="10">
+                                10 minutes
+                                </mat-option>
+    
+                                <mat-option [value]="20">
+                                20 minutes
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>                      
+                    </div>
+    
+                </div>
+    
+                <div class="main-title">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Itinerary name</mat-label>
+                        <input matInput [(ngModel)]="itinerary.name">
+                    </mat-form-field>
+    
+                    <button (click)="saveItinerary()" *ngIf="logged && !probablyVisited(itinerary)" mat-raised-button class="button-save" aria-label="save itinerary" >
+                        Save
+                        <mat-icon >favorite_rounded</mat-icon>
+                    </button>
+                </div>
+            </mat-card>
+
+            
+
+            <div cdkDropListGroup class="drag-lists-container">
+                <mat-card class="day-container" *ngFor="let day of itinerary.days; let dayIndex = index; trackBy: trackByIndex">
+
+                    <mat-card-title class="day-title">
+                        <h2> Day {{dayIndex + 1}} ({{getDateFromDayIndex(dayIndex)}}) </h2>
+
+                        <button (click)="addNewAttraction(dayIndex)" mat-mini-fab color="primary" aria-label="Aggiungi attrazione">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </mat-card-title>
+
+                    <mat-accordion cdkDropList
+                        class="itinerary-list"
+                        [cdkDropListData]="day.itinerary"
+                        (cdkDropListDropped)="drop($event, dayIndex)">
+
+                        <div class="single-attraction" *ngFor="let touristAttraction of day.itinerary; let attractionIndex = index; trackBy: trackByIndex">
+
+                            <div *ngIf="attractionIndex > 0" class="orario-trasferimento-container">
+                                <div class="badge-container">
+                                    <div class="badge-orario">
+                                        {{getEndTimeForAttraction(dayIndex, attractionIndex - 1, day.itinerary)}}
+                                    </div>
+
+                                    <div class="description-orario">
+                                        end of the visit
+                                    </div>
+                                </div>
+                                
+                                <div class="travel-time-container">
+                                    <div class="simple-text-container">
+                                        {{itinerary.breakMinutes}} minutes break
+                                    </div>
+    
+                                    <div class="simple-text-container">
+                                        Moving: about {{touristAttraction.timeFromPrev}} minutes
+                                    </div>
+    
+                                    <div class="simple-text-container">
+                                        {{itinerary.breakMinutes}} minutes break
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+                            <mat-expansion-panel cdkDrag cdkDragBoundary="{{ isMobile() ? '.itinerary-list' : '.drag-lists-container'}}">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title class="title-attraction-of-day">
+                                        
+                                        <div class="badge-orario">
+                                            {{getStartTimeForAttraction(dayIndex, attractionIndex, day.itinerary)}}
+                                        </div>
+    
+                                        <h3 class="tourist-attraction-title">
+                                            {{touristAttraction.attraction.name}}
+                                        </h3>
+
+                                        <div class="tourist-attraction-time" fxShow="true" fxHide.lt-md="true">
+                                            <mat-icon aria-hidden="false" aria-label="tempo visita attrazione">query_builder</mat-icon>
+                                            {{touristAttraction.attraction.visitsDurationMinutes}} 
+                                        </div>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+
+                                <button fxShow="true" fxHide.lt-md="true" class="delete-button" (click)="removeAttraction(attractionIndex, dayIndex)" mat-icon-button aria-label="delete">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+    
+                                <div class="body-container">
+                                    {{touristAttraction.attraction.description}}
+
+                                    <br>
+
+                                    <div class="tourist-attraction-time" fxShow="true" fxHide.gt-sm="true">
+                                        <mat-icon aria-hidden="false" aria-label="tempo visita attrazione">query_builder</mat-icon>
+                                        It takes more or less {{touristAttraction.attraction.visitsDurationMinutes}} minutes to visit this attraction. 
+                                    </div>
+    
+                                    <div class="image-container">
+                                        <app-image-with-loader
+                                            *ngIf="touristAttraction.attraction.imageUrl !== null"
+                                            [image]="touristAttraction.attraction.imageUrl + '?width=1000px'"
+                                            [alt]="touristAttraction.attraction.name">
+                                        </app-image-with-loader>
+                                    </div>
+
+                                    <button fxShow="true" fxHide.gt-sm="true" class="remove-attraction-button" (click)="removeAttraction(attractionIndex, dayIndex)" mat-raised-button color="warn" aria-label="delete">
+                                        <mat-icon>close</mat-icon> Remove attraction
+                                    </button>
+                                    
+                                </div>
+                            </mat-expansion-panel>
+                        </div>
+
+                        <ngx-spinner *ngIf="day.loading > 0" bdColor="rgba(0, 0, 0, 0.8)" size ="medium" color ="#fff" type = "pacman" [fullScreen] = "false">
+                            <p style="color: white" > Loading... </p>
+                        </ngx-spinner>
+
+                    </mat-accordion>
+                </mat-card>
+            </div>
+
+            
+        </div>     
+        
+        <div *ngIf="travelItinerary.error">
+            <mat-card>
+                An error has occurred.
+            </mat-card>
+        </div>
+    </div>
+</div> 
+
+<app-loader *ngIf="travelItinerary.countOfUpdate > 0" title="Wait, we are planning your trip..."></app-loader>

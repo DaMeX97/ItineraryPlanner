@@ -1,0 +1,13 @@
+.hide {
+    visibility: hidden!important;
+}
+
+.full-width {
+    width: 100%!important;
+}
+
+button {
+    &::ng-deep span.mat-button-wrapper {
+        padding-left: 24px!important;
+    }
+}

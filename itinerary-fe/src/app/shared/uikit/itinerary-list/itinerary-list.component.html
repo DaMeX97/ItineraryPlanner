@@ -1,0 +1,36 @@
+<div class="itinerary-list">
+    <mat-card *ngFor="let itinerary of itineraries; let itineraryIndex = index" class="single-itinerary">
+        <div class="row">
+            {{itinerary.name}} ({{itinerary.city.name}})
+
+            <div class="action-button-container" fxShow="true" fxHide.lt-md="true">
+                <button mat-raised-button color="primary" *ngIf="!probablyVisited(itinerary) && itinerary.status === 'DRAFT' && jwtService.getId() === userId" (click)="modify(itinerary)">Modify</button>
+
+                <app-button-spinner *ngIf="jwtService.getId() === userId" [spin]="deleteLoader" text="Delete" [callback]="deleteItinerary(itinerary)"></app-button-spinner>
+                <app-button-spinner *ngIf="jwtService.getId() === userId && probablyVisited(itinerary) && itinerary.status !== 'VISITED'" text="Mark as visited" [callback]="confirmItinerary(itinerary, itineraryIndex)"></app-button-spinner>
+            </div>
+
+        </div>
+
+        <div class="row">
+            Number of days: {{itinerary.days.length}}
+        </div>
+
+        <div class="row">
+            From {{dateUtils.getDateStringFromMs(itinerary.startDate, 0)}} to {{dateUtils.getDateStringFromMs(itinerary.startDate,itinerary.days.length - 1)}}
+        </div>
+
+        <div class="row" fxShow="true" fxHide.gt-sm="true">
+            <div class="action-button-container">
+                <button mat-raised-button color="primary" *ngIf="!probablyVisited(itinerary) && itinerary.status === 'DRAFT' && jwtService.getId() === userId" (click)="modify(itinerary)">Modify</button>
+
+                <app-button-spinner *ngIf="jwtService.getId() === userId" [spin]="deleteLoader" text="Delete" [callback]="deleteItinerary(itinerary)"></app-button-spinner>
+                <app-button-spinner *ngIf="jwtService.getId() === userId && probablyVisited(itinerary) && itinerary.status !== 'VISITED'" [spin]="visitedLoader" text="Mark as visited" [callback]="confirmItinerary(itinerary, itineraryIndex)"></app-button-spinner>
+            </div>
+        </div>
+    </mat-card>
+
+    <mat-card *ngIf="itineraries.length === 0">
+        No itinerary saved.
+    </mat-card>
+</div>

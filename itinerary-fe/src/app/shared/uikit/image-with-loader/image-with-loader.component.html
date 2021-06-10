@@ -1,0 +1,9 @@
+<div class="container">
+    <ngx-spinner *ngIf="isLoading" bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="fff" type="pacman" [fullScreen]="false">
+        <p style="color: white; font-size: 20px">
+            Loading image...
+        </p>
+    </ngx-spinner>
+    <img class="image-loaded" [src]=image [ngStyle]="{visibility:isLoading?'hidden':''}"
+    (load)="hideLoader()" (error)="hideLoader()" alt="{{alt}}"/>
+</div>

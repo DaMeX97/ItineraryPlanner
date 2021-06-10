@@ -1,0 +1,8 @@
+@import "/src/vars.scss";
+
+@media screen and (max-width: $max-mobile) {
+    // mobile
+    p {
+        margin-top: 50px;
+    }
+}

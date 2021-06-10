@@ -1,7 +1,0 @@
-SELECT ?child ?childLabel ?country ?countryLabel
-WHERE 
-{
-  ?child wdt:P31 wd:Q570116;
-         wdt:P17 ?country.
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
-}

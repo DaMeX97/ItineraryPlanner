@@ -1,0 +1,108 @@
+@import "/src/vars.scss";
+
+.top-header {
+    position: relative;
+
+    .top-header-thumb {
+        background: repeating-linear-gradient(transparent 0%,transparent 25%,$primary-color 25%,$primary-color  37.5%),
+                    linear-gradient(#24a5f9,$secondary-color),
+                    linear-gradient(105deg,transparent 0%,transparent 50%,#b4cad9 50%,$primary-color 100%);
+        background-blend-mode: multiply;
+        height: 300px;
+        border-top: 2px solid $secondary-color;
+    }
+    
+    .top-header-author {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%,0);
+        top: 170px;
+        text-align: center;
+        width: 100%;
+        z-index: 4;
+    
+        .author-thumb {
+            border-radius: 100%;
+            border: 6px solid $primary-color;
+            margin: 0 auto;
+            overflow: hidden;
+            width: 132px;
+            height: 132px;
+            background-color: $primary-color;
+
+            img {
+                background-size: contain;
+                background-position: center;
+                height: 100%;
+            }
+        }
+    
+        .author-content {
+            .author-name {
+                margin-top: 10px;
+                font-size: 25px;
+                color: $mainColor;
+            }
+        }
+    }
+}
+
+::ng-deep mat-tab-header .mat-tab-label-content {
+    color: $mainColor!important;
+}
+
+::ng-deep .mat-tab-header {
+    border-color: $mainColor!important;
+}
+
+::ng-deep .mat-tab-header-pagination-chevron {
+    border-color: black!important;
+}
+
+::ng-deep .mat-tab-label.mat-focus-indicator.mat-tab-label-active {
+    .mat-tab-label-content {
+        color: black!important;
+        font-weight: bold!important;
+    }
+}
+
+.profile-page-post {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.tab-content-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+
+    app-post-list, app-user-list, app-itinerary-list {
+        width: 100%;
+    }
+}
+
+.profile-info-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+    mat-tab-group {
+        width: 80%;
+        max-width: 800px;
+    }
+}
+
+@media screen and (max-width: $max-mobile) {
+    // mobile
+    .profile-info-page-container {
+        mat-tab-group {
+            width: 100%;
+        }
+    }
+}

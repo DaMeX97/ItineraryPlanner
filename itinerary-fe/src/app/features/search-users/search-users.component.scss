@@ -1,0 +1,22 @@
+@import "/src/vars.scss";
+
+.list-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+
+    app-user-list {
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: $max-mobile) {
+    // mobile
+    .list-container {
+        padding: 0 10px;
+        app-user-list {
+            width: 100%;
+        }
+    }
+}

@@ -1,0 +1,62 @@
+<div class="registration-container">
+    <app-navbar></app-navbar>
+
+    <div class="signup-page">
+        <section class="signup" style="background-image: url(assets/images/registration/signup-bg.jpg)">
+            <div class="container">
+                <form>
+                    <div class="signup-content">
+                        <h1 class="title-container">
+                            CREATE AN ACCOUNT
+                        </h1>
+        
+                        <div>
+                            <mat-form-field>
+                                <mat-label>Email</mat-label>
+                                <input matInput placeholder="pat@example.com" [formControl]="email" required>
+                                <mat-error *ngIf="email.invalid">{{getEmailMessage()}}</mat-error>
+                            </mat-form-field>
+                        </div>
+        
+                        <div>
+                            <mat-form-field>
+                                <mat-label>First Name</mat-label>
+                                <input matInput placeholder="Mario" [formControl]="firstName" required>
+                                <mat-error *ngIf="firstName.invalid">{{getFirstNameMessage()}}</mat-error>
+                            </mat-form-field>
+                        </div>
+        
+                        <div>
+                            <mat-form-field>
+                                <mat-label>Last Name</mat-label>
+                                <input matInput placeholder="Rossi" [formControl]="lastName" required>
+                                <mat-error *ngIf="lastName.invalid">{{getLastNameMessage()}}</mat-error>
+                            </mat-form-field>
+                        </div>
+        
+                        <div>
+                            <mat-form-field>
+                                <mat-label>Password</mat-label>
+                                <input matInput placeholder="Password" [formControl]="password" type="password" required>
+                                <mat-error *ngIf="password.invalid">{{getPasswordMessage()}}</mat-error>
+                            </mat-form-field>
+                        </div>
+        
+                        <div>
+                            <mat-form-field>
+                                <mat-label>Confirm password</mat-label>
+                                <input matInput placeholder="Password" [formControl]="confirmPassword" type="password" required>
+                                <mat-error *ngIf="confirmPassword.invalid">{{getConfirmPasswordMessage()}}</mat-error>
+                            </mat-form-field>
+                        </div>
+                        
+                        <div class="buttonContainer">
+                            <app-button-spinner [fullWidth]="true" text="Register!" [spin]="loaderRegistration" [callback]="register"></app-button-spinner>
+                        </div>
+        
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+</div>

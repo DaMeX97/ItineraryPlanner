@@ -1,0 +1,34 @@
+<div class="user-list-container">
+    <mat-card *ngFor="let user of users; let userIndex = index;" class="single-user">
+
+        <div class="row user-info-header">
+            <div class="user-container">
+                <img class="author-image" src="/assets/images/default/user.png"/>
+
+                <button class="profile-link" mat-button color="primary" href="#" (click)="goToUserPage(user)">{{user.firstName}} {{user.lastName}}</button>
+            </div>
+            
+            <app-button-spinner *ngIf="!isAlreadyFollowing(user) && !hasFollowingRequest(user)" text="Follow" [spin]="followLoader === userIndex" [callback]="followUser(user, userIndex)"></app-button-spinner>
+            <div *ngIf="hasFollowingRequest(user)"> Follow request already sent. </div>
+        </div>
+
+        <div class="row user-info">
+            <div>
+                Posts: {{user.numberOfPosts}}
+            </div>
+    
+            <div>
+                Followers: {{user.numberOfFollowers}}
+            </div>
+    
+            <div class="user-info">
+                Following: {{user.numberOfFollowing}}
+            </div>
+        </div>
+
+    </mat-card>
+
+    <mat-card *ngIf="users.length === 0">
+        No users to show.
+    </mat-card>
+</div>

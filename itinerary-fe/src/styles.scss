@@ -1,0 +1,57 @@
+@import "~@angular/material/theming";
+
+@import '~ngx-toastr/toastr.css';
+
+@import "/src/vars.scss";
+
+@include mat-core();
+
+@import url('https://fonts.googleapis.com/css?family=Roboto%20Mono:400,600,700');
+
+$angular-primary: mat-palette($primary-mat, 500, 100, 900);
+
+$angular-accent: mat-palette($secondary-mat, 500, 100, 900);
+
+$angular-warn: mat-palette($warn-mat);
+
+$angular-dark-theme: mat-dark-theme(
+  (
+    color: (
+      primary: $angular-primary,
+      accent: $angular-accent,
+      warn: $angular-warn,
+    ),
+  )
+);
+
+.darkMode {
+  @include angular-material-color($angular-dark-theme);
+}
+
+html, body, .mat-app-background { 
+    height: 100%; 
+}
+.mat-app-background {
+  background-color: #E0E0E0!important;
+}
+body { 
+    margin: 0; 
+    font-family: "Roboto Mono", sans-serif; 
+}
+
+* {
+  font-family: "Roboto Mono", sans-serif!important; 
+}
+
+.material-icons {
+  font-family: 'Material Icons'!important;
+}
+
+@media screen and (max-width: $max-mobile) {
+  // mobile
+  .full-screen-modal-mobile {
+      width: 100%;
+      height: 100%;
+      max-width: 100%!important;
+  }
+}

@@ -1,0 +1,48 @@
+<div class="profile-page-container">
+    <app-navbar></app-navbar>
+
+    <div class="profile-container" *ngIf="user !== null">
+        <div class="top-header">
+
+            <div class="top-header-thumb"></div>
+
+            <div class="top-header-author">
+                <div class="author-thumb">
+                    <img class="author-image" src="/assets/images/default/user.png"/>
+                </div>
+
+                <div class="author-content">
+                    <h1 class="author-name">{{user.firstName}} {{user.lastName}}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-info-page-container" *ngIf="user !== null">
+        <mat-tab-group color="accent" dynamicHeight mat-align-tabs="center">
+            <mat-tab label="Post ({{user.posts.length}})">
+                <div class="tab-content-container">
+                    <app-post-list [showCreatePost]="jwtService.getId() === user.id" [posts]="user.posts"></app-post-list>
+                </div>
+            </mat-tab>
+    
+            <mat-tab label="Itineraries ({{user.itineraries.length}})">
+                <div class="tab-content-container">
+                    <app-itinerary-list [userId]="user.id" [itineraries]="user.itineraries"></app-itinerary-list>
+                </div>
+            </mat-tab>
+    
+            <mat-tab label="Followers ({{user.followers.length }})">
+                <div class="tab-content-container">
+                    <app-user-list [currentUser]="user" [users]="user.followers"></app-user-list>
+                </div>
+            </mat-tab>
+    
+            <mat-tab label="Following ({{user.following.length }})">
+                <div class="tab-content-container">
+                    <app-user-list [currentUser]="user" [users]="user.following"></app-user-list>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

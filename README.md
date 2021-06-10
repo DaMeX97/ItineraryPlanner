@@ -1,45 +1,58 @@
-# ItineraryPlanner
+# Itinerary Planner
+The main objective of this project is to develop an itinerary planification for travels. It will help
+users to plan an itinerary in order to see the best tourist attractions of a city (or nearly).
+The project is mainly focused on aspects related to the travel planification and, on top of that, it will
+be implemented a small social network.
+The server-side of the web application is developed in Java using Spring Boot.
+Instead, the client-side of the web application is developer using Angular 11.
 
-Query su tourist attraction (fatta):
-- Musei
-- Parchi divertimento
-- Zoo
+## Server-side
 
-Query su natural geographic object:
-- Parchi naturali
-- Cascate
+This small guide is written in order to properly setup and run the server-side Spring Boot project.
 
-//Query su even:
-//- Mostre d'arte
+### Prerequisites
 
-//Query su work of art:
-//- Opere d'arte
+1. Java (or open-jdk for Linux users)
+2. Maven
+3. PostgreSQL
 
-Query su performing arts building:
-- Teatri
+*Note*: you will need to properly setup the *PATH* (to add maven folder) and *JAVA_HOME* environment variables correctly. Also you need to have the credentials of the database in order to properly run the server, otherwise it will not connect to the database and it will give an exception.
 
-Query su religious building:
-- Chiese
+### Run the server-side
 
-Query su beach:
-- Spiaggie
+First of all you need to properly configure the ***itineray_server/src/main/resources/application.properties*** file in order to update the following environment variables:
+1. **spring.datasource.url**: database connection URL
+2. **spring.datasource.username**: database user username
+3. **spring.datasource.password**: database user password
 
-Query su montain:
-- Montagne
+Then, to run the server-side it's sufficient to run the following command
 
-Query su mountain pass
-- Passi di montagna
+`cd itinerary_server`
 
-Query su monument 
-- Monumenti
+`mvn clean spring-boot:run`
 
-Query su square:
-- Piazze
+After the setup, if everything is correct, into the URL http://localhost:8080/public/swagger-ui.html you will find the Swagger of this project, with a list of all the REST endpoints.
 
-//Query su archaeological site
-//- Siti archeologici
+## Client-side
 
-//Query su park
+This small guide is written in order to properly setup and run the client-side Angular project.
 
-Query su artificial animal shelter
-- Acquari
+### Prerequisites
+
+1. npm
+
+### Run the client-side
+
+First of all you need to go into the client-side folder using this command 
+
+`cd itinerary-fe`
+
+Then you need to install all the dependences
+
+`npm install`
+
+After then you can run your project using 
+
+`npm run start`
+
+Now you can simply open your browser into http://localhost:4200/home

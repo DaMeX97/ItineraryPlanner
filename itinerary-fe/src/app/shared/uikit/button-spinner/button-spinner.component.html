@@ -1,0 +1,7 @@
+<button mat-raised-button color="primary" (click)="callback()" [ngClass]="fullWidth ? 'full-width' : 'normal'">
+    {{text}}
+    <mat-icon [ngClass]="!spin ? 'hide' : 'show'">
+        <mat-spinner color="accent" diameter="20">
+        </mat-spinner>
+    </mat-icon>
+</button>

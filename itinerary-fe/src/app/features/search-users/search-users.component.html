@@ -1,0 +1,7 @@
+<div>
+    <app-navbar [query]="query"></app-navbar>
+
+    <div class="list-container" *ngIf="user !== null">
+        <app-user-list [users]="users" [currentUser]="user"></app-user-list>
+    </div>
+</div>

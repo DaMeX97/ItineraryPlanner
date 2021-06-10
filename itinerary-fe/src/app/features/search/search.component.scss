@@ -1,0 +1,455 @@
+@import "/src/vars.scss";
+
+.itinerary-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+
+    .button-save {
+        background-color: #2E7D32;
+    }
+
+    .itinerary-container {
+        display: flex;
+        flex-basis: 80%;
+        flex-direction: column;
+        margin-bottom: 20px;
+
+        .filters-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+
+            .single-filter  {
+                .filter-description {
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                &:not(:first-child) {
+                    margin-left: 20px;
+                }
+                > div {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+
+                    mat-form-field {
+                        width: 50px;
+                    }
+                    
+                    ::ng-deep .mat-form-field-underline {
+                        background-color: transparent!important;
+                    }
+
+                    button {
+                        margin-left: 10px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.drag-lists-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+
+    .day-container{
+        width: 400px;
+        max-width: 100%;
+        display: flex;
+        flex: 40%;
+        vertical-align: top;
+        flex-direction: column;
+        padding: 20px;
+        border-radius: 6px;
+        margin-top: 10px;
+
+        &:nth-child(2n) {
+            margin-left: 10px;
+        }
+
+        &:nth-child(2n + 1) {
+            margin-right: 10px;
+        }
+
+        &:last-child {
+            margin-right: 0!important;
+        }
+
+        .day-title {
+            margin-bottom: 20px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            h2 {
+                margin-bottom: 0!important;
+            }
+        }
+
+        .itinerary-list{
+            min-height: 60px;
+            border-radius: 4px;
+            overflow: hidden;
+            display: block;
+        }
+    }
+}
+
+
+
+
+.cdk-drag-preview {
+    // Drag box preview
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0,0,0,.2),
+                0 8px 10px 1px rgba(0,0,0,.14),
+                0 3px 14px 2px rgba(0,0,0,.12);
+}
+
+.cdk-drag-placeholder {
+    opacity: 0;
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0,0,.2,1);
+}
+
+.single-attraction:last-child{
+    border:none;
+}
+
+.itinerary-list.cdk-drop-list-dragging .single-attraction:not(.cdk-drag-placeholder) {
+    transition:transform 250ms cubic-bezier(0,0,.2,1);
+}
+
+.main-title {
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+
+    mat-form-field {
+        width: 350px;
+    }
+}
+
+
+// Style of single attraction element
+.itinerary-list {
+    height: 100%;
+
+    /*&.cdk-drop-list-dragging {
+        .orario-trasferimento-container {
+            display: none;
+        }
+    }
+
+    &.cdk-drop-list-receiving {
+        .orario-trasferimento-container {
+            display: none;
+        }
+    }*/
+}
+
+.single-attraction, .cdk-drag-preview{
+    padding: 0;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    font-size: 14px;
+    overflow: initial;
+    position: relative;
+
+    .title-attraction-of-day {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &:first-child {
+        &:before {
+            content: '';
+            position: absolute;
+            background-color: #ffff00;
+            top: 20px;
+            left: 25px;
+            width: 2px;
+            height: 100%;
+            z-index: 49;
+        }
+    }
+
+    .divider-container {
+        height: 1px;
+
+        & ::ng-deep .mat-divider {
+            border-top-width: 1px;
+            border-top-color: #ccc;
+        }
+    }
+
+    .orario-trasferimento-container {
+        padding-left: 35px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        .badge-container {
+            z-index: 50;
+            position: relative;
+            .badge-orario {
+                display: inline-block;
+                margin-left: -25px;
+                font-size: 18px;
+                z-index: 50;
+            }
+
+            .description-orario {
+                display: inline-block;
+                margin-left: 10px;
+                font-style: italic;
+            }
+        }
+
+        .travel-time-container {
+            .simple-text-container {
+                margin-top: 20px;
+                position: relative;
+                text-align: center;
+    
+                &:first-child {
+                    margin-top: 10px;
+                    &:before {
+                        content: unset!important;
+                    }
+                }
+    
+                &:before {
+                    content: '';
+                    position: absolute;
+                    background-color: #757575;
+                    top: -16px;
+                    left: 50%;
+                    width: 2px;
+                    height: 15px;
+                }
+            }
+        }
+
+        &:before {
+            content: '';
+            position: absolute;
+            background-color: #ffff00;
+            top: -16px;
+            left: 25px;
+            width: 2px;
+            height: calc(100% + 2px);
+            z-index: 49;
+        }
+    }
+    
+
+    &:last-child {
+        .orario-trasferimento-container {
+            &:before {
+                height: 210px;
+            }
+        }
+    }    
+
+    .badge-orario {
+        background-color: #546E7A;
+        padding: 5px;
+        border-radius: 3px;
+        z-index: 50;
+        border: 1px solid white!important;
+    }
+
+    .delete-button {
+        position: absolute;
+        right: 5px;
+        top: 10px;
+        visibility: visible!important;
+    }
+
+    .mat-expansion-panel-header {
+        padding-left: 10px;
+        min-height: 60px!important;
+        padding-right: 30px;
+
+        &::ng-deep span.mat-expansion-indicator {
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            margin-right: 30px;
+        }
+
+        .tourist-attraction-title {
+            padding-left: 15px;
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            margin: 0;
+        }
+
+        .tourist-attraction-time {
+            display: flex;
+            align-items: center;
+        }
+
+        .mat-expansion-panel-header-title {
+            color: white;
+            font-size: 18px;
+        }
+    }
+}
+
+mat-expansion-panel {
+    background-color: #1976D2!important;
+    border: 1px solid white!important;
+}
+
+::ng-deep .mat-expansion-panel-header:hover {
+    background-color: #1976D2 !important;
+}
+
+.body-container {
+    padding-left: 10px;
+
+    .image-container {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        & ::ng-deep .image-loaded {
+            max-width: 100%;
+            height: auto; 
+            max-height: 400px;
+        }
+
+        & ::ng-deep .container {
+            display: flex;
+        }
+    }
+}
+
+mat-accordion.cdk-drop-list-dragging, mat-accordion.cdk-drop-list-receiving {
+    .orario-trasferimento-container {
+        opacity: 0!important;
+    }
+
+    .single-attraction {
+        &::before {
+            opacity: 0!important;
+        }
+    }
+
+    .divider-container {
+        opacity: 0!important;
+    }
+}
+
+@media screen and (max-width: $max-mobile) {
+    // mobile
+
+    .itinerary-wrapper {
+        padding-left: 10px;
+        padding-right: 10px;
+        .itinerary-container {
+            flex-basis: 100%;
+        }
+    }
+
+    .main-title {
+        mat-form-field {
+            width: 100%!important;
+        }
+    }
+
+    .filters-container {
+        flex-direction: column!important;
+        align-items: flex-start!important;
+    }
+
+    .drag-lists-container {
+        .day-container {
+            margin: 0!important;
+            padding: 10px!important;
+            width: 100%!important;
+
+            .remove-attraction-button {
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            &:not(:first-child) {
+                margin-top: 20px!important;
+            }
+
+            .badge-orario {
+                font-size: 14px!important;
+            }
+
+            &::ng-deep .mat-expansion-panel-body {
+                div.tourist-attraction-time {
+                    display: flex;
+                    margin-top: 10px;
+
+                    mat-icon {
+                        margin-right: 3px;
+                    }
+                }
+            }
+
+            .single-attraction {
+                &:first-child {
+                    &:before {
+                        top: 30px!important;
+                    }
+                }
+
+                &:last-child {
+                    .orario-trasferimento-container {
+                        &:before {
+                            height: 220px!important;
+                        }
+                    }
+                }
+            }
+
+            mat-expansion-panel-header {
+                padding-top: 10px!important;
+                padding-bottom: 10px!important;
+                padding-right: 0!important;
+
+                mat-panel-title {
+                    margin: 0!important;
+                }
+
+                &::ng-deep span.mat-content {
+                    flex-direction: column;
+                }
+
+                .tourist-attraction-time {
+                    margin-left: 30px!important;
+                    margin-top: 10px;
+                }
+
+                &::ng-deep span.mat-expansion-indicator {
+                    //position: absolute;
+                    //bottom: 20px;
+                    //left: 50%;
+                }
+            }
+        }
+    }
+}

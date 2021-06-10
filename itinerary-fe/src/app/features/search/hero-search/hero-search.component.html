@@ -1,0 +1,55 @@
+<div class="hero-section">
+    <div class="hero-overlay"></div>
+
+    <div class="info-container">
+        <h1 class="info-title">
+            Where would you go?
+        </h1>
+
+        <h2 class="info-subtitle">
+            Choose your destination and travel period and "Itinerary Planner" will do the rest!
+        </h2>
+
+        <div class="info-input">
+            <div class="input-container">
+                <mat-form-field floatLabel="never">
+                    <input matInput type="text" [matAutocomplete]="auto" 
+                    (keyup)="onLuogoKeyupEvent($event)"
+                    [formControl]="luogoFormControl" placeholder="Insert a city" />
+                  
+                    <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
+                      <mat-option *ngFor="let option of searchOptions" [value]="getSelectText(option)" 
+                        (onSelectionChange)="luogoSelectionChange(option, $event)"
+                        [matTooltip]="getTooltipText(option)" matTooltipShowDelay="1000">
+                        <span class="mat-body">{{ getSelectText(option) }}</span>
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+
+                <!--<mat-form-field class="input">
+                    <mat-label>Luogo</mat-label>
+                    <input matInput type="text" [(ngModel)]="luogo">
+                    <button mat-button *ngIf="luogo" matSuffix mat-icon-button aria-label="Clear" (click)="luogo=''">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>-->
+            </div>
+
+            <div class="input-container date-input-container">
+                <mat-form-field appearance="fill" class="date-form-field">
+                    <mat-label class="date-label">From/to</mat-label>
+                    <mat-date-range-input [formGroup]="range" [rangePicker]="picker" [min]="minDate" >
+                        <input matStartDate formControlName="start" placeholder="Start date">
+                        <input matEndDate formControlName="end" placeholder="End date">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+            </div>
+
+            <div class="submit-container">
+                <button mat-raised-button color="primary" (click)="onSubmit()">PLAN</button>
+            </div>
+        </div>
+    </div>
+</div>

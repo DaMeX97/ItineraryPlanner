@@ -1,0 +1,58 @@
+@import "/src/vars.scss";
+
+.user-list-container {
+    width: 100%;
+
+    .user-info {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .single-user {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        &:not(:first-child) {
+            margin-top: 10px;
+        }
+
+        .user-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .user-info-header {
+            margin-bottom: 10px;
+        }
+
+        .author-image {
+            width: 42px;
+            margin-right: 10px;
+            display: inline-flex;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            width: 100%;
+
+            &:first-child {
+                justify-content: space-between;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $max-mobile) {
+    // mobile
+    .user-list-container {
+        .single-user {
+            .user-info {
+                flex-direction: column!important;
+                align-items: flex-start;
+            }
+        }
+    }
+}

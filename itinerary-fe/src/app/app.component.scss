@@ -1,0 +1,10 @@
+.mat-app-background {
+    display: flex;
+    flex-direction: column;
+
+    app-footer {
+        display: flex;
+        flex-grow: 1!important;
+        align-items: flex-end;
+    }
+}
