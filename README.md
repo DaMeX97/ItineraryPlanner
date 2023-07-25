@@ -1,7 +1,7 @@
 # Itinerary Planner
-The main objective of this project is to develop an itinerary planification for travels. It will help users to plan an itinerary in order to see the best tourist attractions of a city (or nearly).
+The main objective of this project is to develop an itinerary planner for travels. It will help users to plan an itinerary in order to see the best tourist attractions of a city (or nearly).
 
-The project is mainly focused on aspects related to the travel planification and, on top of that, it will be implemented a small social network. The server-side of the web application is developed in Java using Spring Boot. Instead, the client-side of the web application is developer using Angular 11.
+The project is mainly focused on aspects related to the travel planner and, on top of that, it will be implemented a small social network. The server-side of the web application is developed in Java using Spring Boot. Instead, the client-side of the web application is developer using Angular 11.
 
 ## Screenshots
 
